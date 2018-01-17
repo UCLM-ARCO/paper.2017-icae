@@ -1,0 +1,24 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+path = '$basedir/src/samples/OpenSplice/HelloWorldWait/exec/'
+Test('make', cwd='$basedir/src/samples/OpenSplice/HelloWorldWait/')
+Test('ospl start', detach=True, timeout=0)
+
+s = Test(path + 'WaitSetDataSubscriber', detach=True, timeout=0)
+s.post += FileContains('[WaitSetDataSubscriber] Ready')
+s.post += FileContains('userID  : 1')
+s.post += FileContains('First Hello')
+s.post += FileContains('Hello again')
+
+p = Test(path + 'WaitSetDataPublisher')
+p.pre += Poll(TaskRunning(s))
+p.post += FileContains('[Publisher] writing a message')
+p.post += FileContains('userID  : 1')
+p.post += FileContains('First Hello')
+p.post += FileContains('Hello again')
+
+ospl = Test('ospl stop', timeout=0)
+ospl.pre += Not(Poll(TaskRunning(s)))
+
+Test('make clean', cwd='$basedir/src/samples/OpenSplice/HelloWorldWait/')

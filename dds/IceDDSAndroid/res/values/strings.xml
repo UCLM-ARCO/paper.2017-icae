@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Subscribe to topic</string>
+    <string name="app_name">IceDDSAndroid</string>
+    <string name="app_name2">Topics List</string>
+     <string name="app_subscribeNewTopic">Subscribe to new Topic</string>
+    <string name="locator">IceDDS/TopicManager -t:tcp -h 161.67.106.65 -p 3000</string>
+    <string name="titleTopicsList"><u>Topics List</u></string>
+    <string name="titleSubscribedTopicsList"><u>Subscribed Topics List</u></string>
+</resources>

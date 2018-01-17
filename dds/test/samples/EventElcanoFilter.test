@@ -1,0 +1,22 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+path = '$basedir/src/samples/OpenSplice/EventElcanoFilter/'
+Test('make', cwd='$basedir/src/samples/OpenSplice/EventElcanoFilter/')
+o = Test('ospl start', detach=True, timeout=0)
+
+s = Test(path + 'exec/EventElcanoFilterSubscriber WIFI', detach=True, timeout=0)
+s.post += FileContains('Provider : WIFI', times=2)
+s.post += Not(FileContains('Provider : WIFI', times=3))
+
+p = Test(path + 'exec/EventElcanoFilterPublisher ' + path + "events/data",
+         timeout=0)
+p.pre += Poll(TaskRunning(s))
+p.post += FileContains('Provider : RFID')
+p.post += FileContains('Provider : WIFI')
+p.post += FileContains('Provider : BLUETOOTH')
+
+ospl = Test('ospl stop', timeout=0)
+ospl.pre += Not(Poll(TaskRunning(p)))
+
+Test('make clean', cwd='$basedir/src/samples/OpenSplice/EventElcanoFilter/')

@@ -1,0 +1,11 @@
+Source: icedds
+Section: utils
+Priority: optional
+Maintainer: Alicia Serrano Sánchez <alisesan86@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~), python
+Standards-Version: 3.9.3
+
+Package: icedds
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+Description: event filtering features for IceStorm

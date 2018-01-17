@@ -1,0 +1,4 @@
+#Tue Apr 03 12:05:45 CEST 2012
+eclipse.preferences.version=1
+includes=slice;../../../../../../usr/share/Ice/slice
+sliceSourceDirs=slice;slice/MLP

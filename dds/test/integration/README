@@ -1,0 +1,54 @@
+Escenario de la prueba de integración
+-------------------------------------
+
+Componentes:
+- Un canal general
+- Un canal con los filtros 'x in range(1, 14)' y 'y in range (15, 40)'
+
+- Un suscriptor registrado en ambos canales.
+- Un suscriptor con filtros 'x in range(5,20)' y 'y > 13' registrado en ambos canales
+
+- Un publicador que envía eventos a ambos canales
+  --> Eventos enviados al canal general:
+      (2, 3, 4) y (5, 14, 20)
+
+  --> Eventos enviados al canal filtrado:
+      (12, 16, 3) --> datos válidos en el canal
+      (15, 20, 8) --> datos inválidos en el canal
+      (2, 23, 42)  --> datos válidos en el canal
+
+- Un publicador con filtro 'x in range(10,20)' que envía eventos a ambos canales
+  --> Eventos enviados al canal general:
+      (1, 2, 3) --> datos inválidos en el publicador
+      (13, 13, 20) --> datos válidos en el publicador
+      (17, 23, 44)  --> datos válidos en el publicador
+
+  --> Eventos enviados al canal filtrado:
+      (10, 18, 23) --> datos válidos en el canal y en el publicador
+      (11, 8, 42) --> datos inválidos en el canal
+
+Por lo tanto, los suscriptores reciben los siguientes eventos:
+- Suscriptor general:
+  ( 2,  3,  4)
+  ( 5, 14, 20)
+  (13, 13, 20)
+  (17, 23, 44)
+  (12, 16,  3)
+  (10, 18, 23)
+  ( 2, 23, 42)
+
+- Suscriptor filtrado:
+  ( 5, 14, 20)
+  (17, 23, 44)
+  (12, 16,  3)
+  (10, 18, 23)
+
+
+Además comprobamos en enlace a canales filtrados, para ello se tiene:
+- Un canal con filtros 'x > 10' y 'y < 20'
+- Un suscriptor de este canal
+
+Entonces se realiza un enlace con los dos canales anteriormente mencionados
+y el suscriptor recibe los siguientes eventos:
+  (12, 16,  3)
+  (13, 13, 20)

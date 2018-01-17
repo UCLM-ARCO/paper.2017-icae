@@ -1,0 +1,8 @@
+- It is assumed that IceStorm is running.
+
+- To run 'icedds' you need a configuration file and execute the following
+  command:
+
+  icedds --Ice.Config=example.cfg
+
+  * There is a example file of configuration in '/usr/share/doc/icedds/'.

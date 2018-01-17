@@ -1,0 +1,65 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+import signal
+
+
+admin = Test("$basedir/samples/tools-icedds/TopicManager.py " +
+         "--Ice.Config=$basedir/samples/tools-icedds/IceDDSManagerLocal.config",
+         shell=True, cwd='$basedir', detach=True, timeout=0)
+
+topics = Test("$basedir/samples/tools-icedds/createtopics.py " +
+         '"IceDDS/TopicManager -t:tcp -p 3000"',
+         shell=True, cwd='$basedir', detach=True, timeout=0)
+
+subscriber = Test('$basedir/samples/tools-icedds/subscriber.py '+
+         '--Ice.Config=$basedir/samples/tools-icedds/subscriber.cfg '+
+         '"IceDDS/TopicManager -t:tcp -p 3000"',
+         shell=True, timeout=0, detach=True)
+subscriber.pre += Poll(OpenPort(3000))
+subscriber.pre += Poll(TaskRunning(admin))
+subscriber.pre += Poll(TaskRunning(topics))
+subscriber.post += FileContains("Received Event (2, 3, 4)")
+subscriber.post += FileContains("Received Event (5, 14, 20)")
+subscriber.post += FileContains("Received Event (13, 13, 20)")
+subscriber.post += FileContains("Received Event (17, 23, 44)")
+subscriber.post += FileContains("Received Event (12, 16, 3)")
+subscriber.post += FileContains("Received Event (15, 20, 8)")
+subscriber.post += FileContains("Received Event (10, 18, 23)")
+subscriber.post += FileContains("Received Event (11, 8, 42)")
+subscriber.post += FileContains("Received Event (2, 23, 42)")
+
+
+filteredSubscriber = Test('$basedir/samples/tools-icedds/filteredsubscriber.py '+ '"IceDDS/TopicManager -t:tcp -p 3000"',
+         shell=True, timeout=0, detach=True)
+filteredSubscriber.pre += Poll(OpenPort(3000))
+filteredSubscriber.pre += Poll(TaskRunning(admin))
+filteredSubscriber.pre += Poll(TaskRunning(topics))
+filteredSubscriber.post += FileContains("Received Event (5, 14, 20)")
+filteredSubscriber.post += FileContains("Received Event (17, 23, 44)")
+filteredSubscriber.post += FileContains("Received Event (12, 16, 3)")
+filteredSubscriber.post += FileContains("Received Event (15, 20, 8)")
+filteredSubscriber.post += FileContains("Received Event (10, 18, 23)")
+
+linkedSubscriber = Test('$basedir/samples/tools-icedds/linkedtopic.py '+
+         '"IceDDS/TopicManager -t:tcp -p 3000"',
+         shell=True, timeout=0, detach=True)
+linkedSubscriber.pre += Poll(OpenPort(3000))
+linkedSubscriber.pre += Poll(TaskRunning(admin))
+linkedSubscriber.pre += Poll(TaskRunning(topics))
+linkedSubscriber.post += FileContains("Received Event (12, 16, 3)")
+linkedSubscriber.post += FileContains("Received Event (13, 13, 20)")
+linkedSubscriber.post += FileContains("Received Event (11, 8, 42)")
+
+publisher = Test('$basedir/samples/tools-icedds/publisher.py '+
+         '"IceDDS/TopicManager -t:tcp -p 3000"', shell=True, timeout=0)
+publisher.post += FileContains("Send data to general topic")
+publisher.post += FileContains("Send data to filtered topic")
+
+filteredPublisher = Test('$basedir/samples/tools-icedds/filteredpublisher.py '+
+         '"IceDDS/TopicManager -t:tcp -p 3000"', shell=True, timeout=0)
+filteredPublisher.post += FileContains("Send data to general topic")
+filteredPublisher.post += FileContains("Send data to filtered topic")
+
+
+TaskTerminator(admin,topics,subscriber,filteredSubscriber,linkedSubscriber,publisher,filteredPublisher)

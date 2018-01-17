@@ -1,0 +1,10 @@
+1. Añadir al .bashrc lo siguiente:
+   source $rutadirOpenSplice/HDE/x86.linux2.6/release.com
+
+2. Añadir la variable OSPL_HOME al .bashrc con la ruta de instalación
+   export OSPL_HOME=/OpenSplice/HDE/x86.linux2.6/
+
+3. Ejecutar OpenSplice daemon:
+   $ ospl start
+
+4. make

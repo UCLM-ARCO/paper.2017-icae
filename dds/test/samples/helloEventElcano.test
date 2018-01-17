@@ -1,0 +1,28 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+path = '$basedir/src/samples/OpenSplice/HelloEventElcano/exec/'
+Test('make', cwd='$basedir/src/samples/OpenSplice/HelloEventElcano/')
+Test('ospl start', detach=True, timeout=0)
+
+# test if the third event is sent and received.
+s = Test(path + 'EventElcanoDataSubscriber', detach=True, timeout=0)
+s.post += FileContains('[EventElcanoDataSubscriber] Ready ...')
+s.post += FileContains('MSID  : 5482871882')
+s.post += FileContains('Time : 23')
+s.post += FileContains('Provider : RFID')
+s.post += FileContains('Point : (2.1, 2.6, 5.3)')
+
+p = Test(path + 'EventElcanoDataPublisher', timeout=0)
+p.pre += Poll(TaskRunning(s))
+p.post += FileContains('[Publisher] writing a message')
+p.post += FileContains('MSID  : 5482871882')
+p.post += FileContains('Time : 23')
+p.post += FileContains('Provider : RFID')
+p.post += FileContains('Point : (2.1, 2.6, 5.3)')
+
+
+ospl = Test('ospl stop', timeout=0)
+ospl.pre += Not(Poll(TaskRunning(p)))
+
+Test('make clean', cwd='$basedir/src/samples/OpenSplice/HelloEventElcano/')

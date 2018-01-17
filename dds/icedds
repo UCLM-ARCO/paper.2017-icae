@@ -1,0 +1,35 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+import sys, time
+
+import Ice
+import IceDDS
+
+
+class IceDDSManager(Ice.Application):
+
+    def run(self, args):
+        ic = self.communicator()
+
+        manager_adapter = ic.createObjectAdapter("IceDDS.TopicManager")
+        manager_adapter.activate()
+
+        try:
+            manager = IceDDS.TopicManager(manager_adapter)
+        except Ice.ConnectionRefusedException:
+            print "ERROR: IceStorm Service not found"
+            return -1
+
+        proxy = manager_adapter.add(manager,
+                            ic.stringToIdentity("IceDDS/TopicManager"))
+
+        print proxy
+
+        ic.waitForShutdown()
+
+        return 0
+
+
+if __name__ == "__main__":
+    sys.exit(IceDDSManager().main(sys.argv))

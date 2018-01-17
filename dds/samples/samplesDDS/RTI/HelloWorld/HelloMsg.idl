@@ -1,0 +1,6 @@
+
+const short MAX_MSG_LENGTH = 256;
+struct HelloMsg {
+   long code; //@key
+   string<MAX_MSG_LENGTH> msg;
+};

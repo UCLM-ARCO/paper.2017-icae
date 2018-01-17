@@ -1,0 +1,8 @@
+- Hay que arrancar icestorm antes de ejecutar el subscriber y el publisher. 
+Para ello, hacer un 'make start' en la carpeta partitions-ice que está en el
+mismo directorio raiz.
+
+- En la ejecución tanto del subscriber.java como en publisher.java se tiene que
+indicar argumentos:
+    --> --Ice.Config=subscriber.config
+    --> --Ice.Config=publisher.config

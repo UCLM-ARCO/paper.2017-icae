@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="arco.icedds"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="10" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity 
+            android:name=".DDSEventsActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".TopicsList"
+                  android:label="@string/app_name2"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity android:name=".SubscribeToSelectedTopic"
+                  android:label="@string/app_subscribeNewTopic"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity android:name=".SubscribeToNewTopic"
+                  android:label="@string/app_subscribeNewTopic"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity android:name=".SubscribeNewTopic"
+                  android:label="@string/app_subscribeNewTopic"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <service android:name="arco.icedds.services.InitializationService">
+            <intent-filter>
+                <action android:name="com.arco.cep.upper.INIT_SERVICE" />
+            </intent-filter>        
+        </service>
+        <service android:name="arco.icedds.services.IceCoreService"></service>
+        <service android:name="arco.icedds.services.ListenerService"></service>
+    </application>
+
+</manifest>

@@ -1,0 +1,19 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+path = '$basedir/src/samples/OpenSplice/HelloWorld/exec/'
+Test('make', cwd='$basedir/src/samples/OpenSplice/HelloWorld/')
+Test('ospl start', detach=True, timeout=0)
+
+p = Test(path + 'HelloWorldDataPublisher')
+p.post += FileContains('[Publisher] writing a message containing')
+p.post += FileContains('userID  : 2')
+
+s = Test(path + 'HelloWorldDataSubscriber')
+s.post += FileContains('[Subscriber] message received')
+s.post += FileContains('userID  : 2')
+
+ospl = Test('ospl stop', timeout=0)
+ospl.pre += Not(Poll(TaskRunning(s,p)))
+
+Test('make clean', cwd='$basedir/src/samples/OpenSplice/HelloWorld/')

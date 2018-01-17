@@ -1,0 +1,18 @@
+module EventElcano
+{
+  struct Point {
+    double x;
+    double y;
+    double z;
+  };
+
+  struct BoxEvent
+  {
+    string msid;
+    long time;
+    string provider;
+    Point point;
+  };
+  #pragma keylist BoxEvent msid
+
+};

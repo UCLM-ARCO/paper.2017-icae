@@ -1,0 +1,10 @@
+1. Añadir al PATH de bash el directorio donde se haya instalado 
+el SDK de RTI.
+2. Añadir al .bashrc la variable NDDSHOME que debe tener la ruta 
+/dirRTI/ndds.4.5.d/
+
+3. make
+4. make -f makefile_HelloMsg_i86Linux2.6gcc4.1.1
+
+** Hay que copiar la licencia de RTI en el directorio donde
+están los ejecutables que se generan

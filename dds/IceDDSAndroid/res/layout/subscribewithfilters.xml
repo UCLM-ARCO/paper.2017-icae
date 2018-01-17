@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#848484"
+    android:orientation="vertical" 
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="30dp">
+
+        <Button
+            android:id="@+id/subscribeSelected"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="Subscribe"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" 
+            android:paddingLeft="30dp"/>
+
+        <Button
+            android:id="@+id/WithFilters"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="Add own filters"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/canceledSubscribe"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

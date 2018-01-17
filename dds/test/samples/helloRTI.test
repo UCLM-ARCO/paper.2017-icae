@@ -1,0 +1,27 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+import signal
+
+path = '$basedir/src/samples/RTI/HelloWorld/objs/i86Linux2.6gcc4.1.1/'
+
+Test('make',
+     cwd='$basedir/src/samples/RTI/HelloWorld',
+     timeout=10)
+
+p = Test(path + 'HelloMsg_publisher 1',
+         detach=True, shell=True,
+         expected=-15,
+         timeout=0)
+p.post += FileContains('Writing')
+p.post += FileContains('count 2')
+
+s = Test(path + 'HelloMsg_subscriber 1',
+         detach=True,
+         expected=-15,
+         timeout=0)
+s.post += FileContains('sleeping')
+s.post += FileContains('code: 2')
+
+
+TaskTerminator(p, s, delay=15)

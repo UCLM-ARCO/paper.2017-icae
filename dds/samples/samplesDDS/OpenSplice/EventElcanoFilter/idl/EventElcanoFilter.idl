@@ -1,0 +1,17 @@
+module EventElcanoFilter
+{
+  struct Point {
+    double x;
+    double y;
+    double z;
+  };
+
+  struct LocEvent
+  {
+    string provider;
+    string msid;
+    long time;
+    Point point;
+  };
+  #pragma keylist LocEvent provider
+};

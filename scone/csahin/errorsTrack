@@ -1,0 +1,37 @@
+***************************
+InFucnt: new-event-type
+***************************
+Error: 
+	CL-USER> (new-event-type {bend2} '({event}) :roles ((:indv {the2} {thing})))
+
+	; Evaluation aborted on #<SIMPLE-ERROR "Element ~S does not exist." {10068017F3}>.
+
+Coming from: lookup-element-test => *obejct-involved*
+
+Reason: It was not defined before using the defvar.
+Solution: Add to file new-event.lisp at lines 2 and 3 the following code:
+	(new-indv-role {object involved} {event} {thing})
+	(defvar *object-involved* (lookup-element {object involved}))
+
+..........................................................................................................
+Error:	
+	NIL not an existing relation or statement.
+  	[Condition of type SIMPLE-ERROR]
+	Evaluation aborted on #<SIMPLE-ERROR "~S not an existing relation or statement." {1005ED9F33}>.
+Coming from: new-statement
+Reason: The lookup-element function had to be used rather than just the {branchBendingRadious} on itsown 
+Solution: (fluent-hold-at-time (lookup-element {branchBendingRadious}) :Level {instant-T0} 'unbent)
+
+*******************************
+InFunct: lis-context-contents
+*******************************
+
+Error:
+	CL-USER> (list-context-contents *context*)
+	({holds at 0-2641} {status 0-2640} {Has 0-2639} {unbent})
+	
+	it does not provades the whole sentence
+
+Coming from:
+Reason:
+Solution:
